@@ -1,8 +1,7 @@
 --1
-SELECT *
+SELECT title_no, title
 FROM title
 WHERE title LIKE '%adventure%'
-   OR title LIKE '%Adventure%'
 
 --2
 SELECT member_no, fine_paid
