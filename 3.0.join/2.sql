@@ -11,7 +11,7 @@ FROM loan AS l
                     ON l.title_no = t.title_no
 
 --3
-SELECT l.in_date, l.fine_paid
+SELECT l.in_date, DATEDIFF(DAY, l.in_date, l.due_date) AS Delay, l.fine_paid
 FROM loanhist AS l
          INNER JOIN title AS t
                     ON l.title_no = t.title_no
