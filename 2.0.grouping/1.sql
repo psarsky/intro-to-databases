@@ -20,6 +20,6 @@ WHERE UnitPrice > (SELECT AVG(UnitPrice)
                    FROM Products)
 
 --5
-SELECT ROUND(SUM(Quantity * UnitPrice * (1 - Discount)), 2) AS Order_val
+SELECT ROUND(SUM(Quantity * UnitPrice * (1 - Discount)), 2) AS OrderVal
 FROM [Order Details]
 WHERE OrderID = 10250
