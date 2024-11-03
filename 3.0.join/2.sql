@@ -17,3 +17,12 @@ FROM loanhist AS l
                     ON l.title_no = t.title_no
 WHERE t.title = 'Tao Teh King'
   AND l.fine_paid IS NOT NULL
+ORDER BY Delay
+
+--4
+SELECT r.isbn
+FROM reservation AS r
+         INNER JOIN member AS m
+                    ON r.member_no = m.member_no
+WHERE m.firstname = 'Stephen'
+  AND m.lastname = 'Graff'
