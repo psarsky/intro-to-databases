@@ -1,7 +1,7 @@
 --1
-SELECT p.ProductName, p.UnitPrice, s.Address, s.PostalCode, s.City, s.Country
+SELECT p.ProductName, p.UnitPrice, s.Address + ', ' + s.PostalCode + ' ' + s.City + ', ' + s.Country as Address
 FROM Products AS p
-         INNER JOIN dbo.Suppliers AS s
+         INNER JOIN Suppliers AS s
                     ON p.SupplierID = s.SupplierID
          INNER JOIN Categories AS c
                     ON p.CategoryID = c.CategoryID
@@ -9,9 +9,9 @@ WHERE p.UnitPrice BETWEEN 20 AND 30
   AND c.CategoryName = 'Meat/Poultry'
 
 --2
-SELECT p.ProductName, p.UnitPrice, s.CompanyName
+SELECT p.ProductName, p.UnitPrice, s.CompanyName as Supplier
 FROM Products AS p
-         INNER JOIN dbo.Suppliers AS s
+         INNER JOIN Suppliers AS s
                     ON p.SupplierID = s.SupplierID
          INNER JOIN Categories AS c
                     ON p.CategoryID = c.CategoryID

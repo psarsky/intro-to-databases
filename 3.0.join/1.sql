@@ -1,7 +1,7 @@
 --1
 SELECT p.ProductName, p.UnitPrice, s.Address, s.PostalCode, s.City, s.Country
 FROM Products AS p
-         INNER JOIN dbo.Suppliers AS s
+         INNER JOIN Suppliers AS s
                     ON p.SupplierID = s.SupplierID
 WHERE UnitPrice BETWEEN 20 AND 30
 
