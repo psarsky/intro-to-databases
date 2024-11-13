@@ -26,16 +26,3 @@ FROM Customers AS c
                     ON o.ShipVia = s.ShipperID
 WHERE YEAR(o.ShippedDate) = 1997
   AND s.CompanyName = 'United Package'
-
---4
-SELECT DISTINCT cu.CompanyName, cu.Phone
-FROM Customers AS cu
-         INNER JOIN Orders AS o
-                    ON cu.CustomerID = o.CustomerID
-         INNER JOIN [Order Details] AS od
-                    ON o.OrderID = od.OrderID
-         INNER JOIN Products AS p
-                    ON od.ProductID = p.ProductID
-         INNER JOIN Categories AS ca
-                    ON p.CategoryID = ca.CategoryID
-where ca.CategoryName = 'Confections'
