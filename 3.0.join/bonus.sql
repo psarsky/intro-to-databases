@@ -69,7 +69,28 @@ FROM Customers AS cu
 WHERE ca.CategoryName = 'Confections'
 
 --7
---nazwy i numery telefonu klientów, którzy nie zamawiali produktów z kategorii Confections
+SELECT cu.CompanyName, cu.Phone
+FROM Customers AS cu
+         LEFT JOIN Orders AS o
+                   ON o.CustomerID = cu.CustomerID
+         LEFT JOIN [Order Details] AS od
+                   ON o.OrderID = od.OrderID
+         LEFT JOIN Products AS p
+                   ON od.ProductID = p.ProductID
+         LEFT JOIN Categories AS ca
+                   ON p.CategoryID = ca.CategoryID AND ca.CategoryName = 'Confections'
+WHERE o.OrderID IS NULL
+
 
 --8
---to co wyżej, ale w 1997r
+SELECT cu.CompanyName, cu.Phone
+FROM Customers AS cu
+         LEFT JOIN Orders AS o
+                   ON o.CustomerID = cu.CustomerID AND YEAR(o.OrderDate) = 1997
+         LEFT JOIN [Order Details] AS od
+                   ON o.OrderID = od.OrderID
+         LEFT JOIN Products AS p
+                   ON od.ProductID = p.ProductID
+         LEFT JOIN Categories AS ca
+                   ON p.CategoryID = ca.CategoryID AND ca.CategoryName = 'Confections'
+WHERE o.OrderID IS NULL
