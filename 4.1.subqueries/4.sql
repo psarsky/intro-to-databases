@@ -1,8 +1,8 @@
 --1
-SELECT OrderID,
+SELECT o.OrderID,
        ROUND((SELECT SUM(od.Quantity * od.UnitPrice * (1 - od.Discount))
               FROM [Order Details] AS od
-              WHERE od.OrderID = 10250) + o.Freight, 2) AS order_val
+              WHERE od.OrderID = 10250) + o.Freight, 2) AS OrderVal
 FROM Orders AS o
 WHERE o.OrderID = 10250
 
@@ -11,8 +11,7 @@ SELECT od.OrderID,
        ROUND(SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) +
              (SELECT Freight
               FROM Orders AS o
-              WHERE od.OrderID = o.OrderID)
-           , 2) AS order_val
+              WHERE od.OrderID = o.OrderID), 2) AS OrderVal
 FROM [Order Details] AS od
 GROUP BY od.OrderID
 
@@ -24,5 +23,10 @@ WHERE CustomerID NOT IN (SELECT o.CustomerID
                          WHERE YEAR(OrderDate) = 1997)
 
 --4
---dokończ
-
+SELECT p.ProductName
+FROM Products AS p
+WHERE (SELECT COUNT(DISTINCT o.CustomerID)
+       FROM Orders AS o
+       WHERE o.OrderID IN (SELECT od.OrderID
+                           FROM [Order Details] od
+                           WHERE od.ProductID = p.ProductID)) > 1
