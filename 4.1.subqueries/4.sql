@@ -23,10 +23,26 @@ WHERE CustomerID NOT IN (SELECT o.CustomerID
                          WHERE YEAR(OrderDate) = 1997)
 
 --4
-SELECT p.ProductName
+SELECT p.ProductName,
+       (SELECT COUNT(DISTINCT o.CustomerID)
+        FROM Orders AS o
+        WHERE o.OrderID IN (SELECT od.OrderID
+                            FROM [Order Details] od
+                            WHERE od.ProductID = p.ProductID)) AS BuyersAmount
 FROM Products AS p
 WHERE (SELECT COUNT(DISTINCT o.CustomerID)
        FROM Orders AS o
        WHERE o.OrderID IN (SELECT od.OrderID
                            FROM [Order Details] od
                            WHERE od.ProductID = p.ProductID)) > 1
+ORDER BY BuyersAmount DESC
+
+SELECT p.ProductName, COUNT(DISTINCT o.CustomerID) AS BuyersAmount
+FROM Products AS p
+         INNER JOIN [Order Details] AS od
+                    ON p.ProductID = od.ProductID
+         INNER JOIN Orders AS o
+                    ON od.OrderID = o.OrderID
+GROUP BY p.ProductName
+HAVING COUNT(DISTINCT o.CustomerID) > 1
+ORDER BY BuyersAmount DESC

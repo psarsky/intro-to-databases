@@ -7,7 +7,7 @@ WHERE CustomerID IN (SELECT CustomerID
                      WHERE ShipVia = (SELECT ShipperID
                                       FROM Shippers
                                       WHERE CompanyName = 'United Package')
-                     And YEAR(ShippedDate) = 1997)
+                       AND YEAR(ShippedDate) = 1997)
 
 --2
 SELECT DISTINCT CompanyName, Phone
