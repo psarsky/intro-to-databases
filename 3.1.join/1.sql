@@ -27,22 +27,24 @@ FROM [Order Details] AS od
          INNER JOIN Customers AS c
                     ON c.CustomerID = o.CustomerID
 GROUP BY od.OrderID, c.CompanyName
-ORDER BY od.OrderID
+ORDER BY Value DESC
 
 --4
 SELECT od.OrderID, c.CompanyName, ROUND(SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)), 2) AS Value
-FROM [Order Details] od
-         INNER JOIN Orders o ON o.OrderID = od.OrderID
-         INNER JOIN Customers c ON c.CustomerID = o.CustomerID
+FROM [Order Details] AS od
+         INNER JOIN Orders AS o
+                    ON o.OrderID = od.OrderID
+         INNER JOIN Customers AS c
+                    ON c.CustomerID = o.CustomerID
 GROUP BY od.OrderID, c.CompanyName
 HAVING SUM(od.Quantity) > 250
-ORDER BY od.OrderID
+ORDER BY Value DESC
 
 --5
 SELECT od.OrderID,
        c.CompanyName,
        ROUND(SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)), 2) AS Value,
-       e.FirstName + ' ' + e.LastName                       AS EmployeeName
+       e.FirstName + ' ' + e.LastName                                AS EmployeeName
 FROM [Order Details] AS od
          INNER JOIN Orders AS o
                     ON o.OrderID = od.OrderID
@@ -52,4 +54,4 @@ FROM [Order Details] AS od
                     ON e.EmployeeID = o.EmployeeID
 GROUP BY od.OrderID, c.CompanyName, e.FirstName, e.LastName
 HAVING SUM(od.Quantity) > 250
-ORDER BY od.OrderID
+ORDER BY Value DESC

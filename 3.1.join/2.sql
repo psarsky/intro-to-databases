@@ -6,6 +6,7 @@ FROM Categories AS c
          INNER JOIN [Order Details] AS od
                     ON od.ProductID = p.ProductID
 GROUP BY c.CategoryID, c.CategoryName
+ORDER BY Sum DESC
 
 --2
 SELECT c.CategoryName, ROUND(SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)), 2) AS Value
@@ -15,6 +16,7 @@ FROM Categories AS c
          INNER JOIN [Order Details] AS od
                     ON od.ProductID = p.ProductID
 GROUP BY c.CategoryID, c.CategoryName
+ORDER BY Value DESC
 
 --3
 SELECT c.CategoryName, ROUND(SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)), 2) AS Value
@@ -24,7 +26,7 @@ FROM Categories AS c
          INNER JOIN [Order Details] AS od
                     ON od.ProductID = p.ProductID
 GROUP BY c.CategoryID, c.CategoryName
-ORDER BY 2
+ORDER BY Value DESC
 
 SELECT c.CategoryName, ROUND(SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)), 2) AS Value
 FROM Categories AS c
@@ -41,4 +43,4 @@ FROM [Order Details] AS od
          INNER JOIN Orders AS o
                     ON o.OrderID = od.OrderID
 GROUP BY od.OrderID, o.Freight
-ORDER BY od.OrderID
+ORDER BY Value DESC
